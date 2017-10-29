@@ -104,20 +104,14 @@ To capture good driving behavior, I first recorded two laps on track one using c
 
 I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
 
-![alt text][image3]
-![alt text][image4]
-![alt text][image5]
+<img src="examples/recovery1.jpg" width="400" alt="Recovery Data" />
+<img src="examples/recovery2.jpg" width="400" alt="Recovery Data" />
+<img src="examples/recovery3.jpg" width="400" alt="Recovery Data" />
 
-Then I repeated this process on track two in order to get more data points.
+To augment the data sat, I also flipped images and angles thinking that this would make model less bias to direction.This indeed helped the model as before I had introduced random flipping,the car was constantly thrown out of the path.For example, here is an image that has then been flipped:
 
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
-
-![alt text][image6]
-![alt text][image7]
-
-Etc ....
-
-After the collection process, I had X number of data points. I then preprocessed this data by ...
+<img src="examples/center.png" width="400" alt="Center Lane Image" />
+<img src="examples/center_flip.png" width="400" alt="Center_Flip Lane Image" />
 
 
 I finally randomly shuffled the data set and put 20% of the data into a validation set. 
