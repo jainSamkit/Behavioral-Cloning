@@ -1,106 +1,102 @@
-#**Behavioral Cloning** 
-
-##Writeup Template
-
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
+# **Behavioral Cloning** 
 
 ---
 
 **Behavioral Cloning Project**
 
 The goals / steps of this project are the following:
-* Use the simulator to collect data of good driving behavior
-* Build, a convolution neural network in Keras that predicts steering angles from images
-* Train and validate the model with a training and validation set
-* Test that the model successfully drives around track one without leaving the road
-* Summarize the results with a written report
-
-
-[//]: # (Image References)
-
-[image1]: ./examples/placeholder.png "Model Visualization"
-[image2]: ./examples/placeholder.png "Grayscaling"
-[image3]: ./examples/placeholder_small.png "Recovery Image"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
-[image5]: ./examples/placeholder_small.png "Recovery Image"
-[image6]: ./examples/placeholder_small.png "Normal Image"
-[image7]: ./examples/placeholder_small.png "Flipped Image"
-
-## Rubric Points
-###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
+* Using the simulator to collect data of good driving behavior
+* Building, a convolution neural network in Keras that predicts steering angles from images
+* Training and validating the model with a training and validation set
+* Testing that the model successfully drives around track one without leaving the road
+* Summarizing the results with a written report.
 
 ---
-###Files Submitted & Code Quality
 
-####1. Submission includes all required files and can be used to run the simulator in autonomous mode
+**Submission includes all required files and can be used to run the simulator in autonomous mode**
 
-My project includes the following files:
 * model.py containing the script to create and train the model
 * drive.py for driving the car in autonomous mode
 * model.h5 containing a trained convolution neural network 
 * writeup_report.md or writeup_report.pdf summarizing the results
 
-####2. Submission includes functional code
+**Submission includes functional code**
 Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing 
 ```sh
 python drive.py model.h5
 ```
 
-####3. Submission code is usable and readable
+**Submission code is usable and readable**
 
 The model.py file contains the code for training and saving the convolution neural network. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
 
-###Model Architecture and Training Strategy
+## Model Architecture and Training Strategy
 
-####1. An appropriate model architecture has been employed
+I have used the popular Nvidia architectue for the self driving car.The model has three convolutional layers with filter      sizes 5x5 with stride 2 and depths being 24,36 and 48.Thereafter three more convolutional layers with filter sizes 3x3 and depths being 64 each.After that four fully connected layers has been used with depths 100,50,10 and 1 each. 
 
-My model consists of a convolution neural network with 3x3 filter sizes and depths between 32 and 128 (model.py lines 18-24) 
+The model includes ELU layers to introduce nonlinearity , and the data is normalized in the model using a Keras lambda layer.
+The input of the model was 90x320 which is cropped using the cropping2d layer in keras.The cropping removed the dashboard and the upper redundant portion of the image which didn't included mostly trees and overhead sky.
 
-The model includes RELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using a Keras lambda layer (code line 18). 
+## Attempts to reduce overfitting in the model
 
-####2. Attempts to reduce overfitting in the model
+To reduce the overfitting in the model ,I used l2 regularization after every layer including convolutional and fully connected layers as well.
 
-The model contains dropout layers in order to reduce overfitting (model.py lines 21). 
+The model was trained and validated on different data sets to ensure that the model was not overfitting. The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
 
-The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 10-16). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+## Model parameter tuning
 
-####3. Model parameter tuning
+The model used an adam optimizer, so the learning rate was not tuned manually.The coefficient of the l2 regularizer is set to be 0.0001.
 
-The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 25).
+## Appropriate training data
 
-####4. Appropriate training data
-
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road ... 
+Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road .Also I included the images from right and left cameras each.Center lane images were also flipped to remove any directional bias learnt by the network.
 
 For details about how I created the training data, see the next section. 
 
-###Model Architecture and Training Strategy
+## Model Architecture and Training Strategy
 
-####1. Solution Design Approach
 
-The overall strategy for deriving a model architecture was to ...
+The overall strategy for deriving a model architecture was to introduce the mixure of convolutional and fully connected layers using mean squared error as the error function.
 
-My first step was to use a convolution neural network model similar to the ... I thought this model might be appropriate because ...
+My first step was to use a convolution neural network model similar to the LeNet.Since I have used the network before,it was easy to incorporate with the given data as well.However,I saw that the error didnt reduce much and the model was underperforming on training data.Nvidia had recently made the network that they used to train their self drving car public.I therefore used the same model for my training data.
 
 In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
 
-To combat the overfitting, I modified the model so that ...
+To combat the overfitting, I modified the model by introducing l2 regularizing after every layer.I also introduced ELU activation function to reduce the wobble of the car.
 
-Then I ... 
+The model performed a lot better than previosuly used LeNet.
 
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
+The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track i.e near the sea specifically.This was due to the directional bias in the network.However,flipping and introducing more datapoints helped the model learn the relevant details while cornering.
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
 
-####2. Final Model Architecture
+# Final Model Architecture
 
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes ...
+My final model consisted of the following layers:
 
-Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
+| Layer         		|     Description	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| Input         		| 90x160x3 RGB image   							| 
+| Convolution 5x5(layer1)     	| 2x2 stride, valid padding with 24 filters|
+| ELU	Activation				|	
+| Convolution 5x5(layer2)	    | 2x2 stride, valid padding with 36 filters|
+| ELU	Activation			|												|
+| Convolution 5x5(layer3)    | 2x2 stride, valid padding with 48 filters |
+| ELU	Activation			|	
+| Convolution 3x3(layer4)     	| 1x1 stride, valid padding with 64 filters|
+| ELU	Activation				|	
+| Convolution 3x3(layer5)     	| 1x1 stride, valid padding with 64 filters|
+| ELU	Activation				|	
+| Flattening         | Flattened layer 3|
+| Fully Connected Layer | outputs 100 layers |
+| ELU	Activation			|	
+| Fully Connected Layer | outputs 50 layers |
+| ELU	Activation			|	
+| Fully Connected Layer | outputs 10 layers |
+| ELU	Activation			|	
+| Fully Connected Layer | outputs 1 layers |
 
-![alt text][image1]
-
-####3. Creation of the Training Set & Training Process
+####  Creation of the Training Set & Training Process
 
 To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
 
