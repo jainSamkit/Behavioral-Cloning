@@ -100,7 +100,7 @@ My final model consisted of the following layers:
 
 To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
 
-<img src="center.png" width="400" alt="Center Lane Image" />
+<img src="examples/center.png" width="400" alt="Center Lane Image" />
 
 I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
 
