@@ -102,7 +102,7 @@ To capture good driving behavior, I first recorded two laps on track one using c
 
 <img src="examples/center.png" width="400" alt="Center Lane Image" />
 
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
+I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to steer back to the center of the lane. These images show what a recovery looks like starting from :
 
 <img src="examples/recovery1.jpg" width="400" alt="Recovery Data" />
 <img src="examples/recovery2.jpg" width="400" alt="Recovery Data" />
